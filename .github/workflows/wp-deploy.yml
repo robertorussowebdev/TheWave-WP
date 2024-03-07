@@ -31,5 +31,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |            
              git clone https://github.com/robertorussowebdev/TheWave-WP/
-             unzip TheWave-WP/thewave-theme.zip
-             mv thewave-theme /var/www/html/wp-content/themes
+             unzip thewave-theme.zip
+             mv thewave-theme /var/www/html/wp-content/themes/
