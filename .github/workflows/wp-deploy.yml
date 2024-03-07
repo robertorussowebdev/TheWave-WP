@@ -23,11 +23,13 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           
 
-      - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            touch provafile
+        - name: Copy Theme using git clone & mv 
+           uses: appleboy/ssh-action@master
+          with:
+           host: ${{ secrets.HOST_DNS }}
+           username: ${{ secrets.USERNAME }}
+           key: ${{ secrets.EC2_SSH_KEY }}
+           script: |
+             git clone https://github.com/robertorussowebdev/TheWave-WP/
+             unzip TheWave-WP/thewave-theme.zip
+             mv thewave-theme /var/www/html/wp-content/themes
