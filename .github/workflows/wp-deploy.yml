@@ -32,8 +32,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY}}
           port: 22
-          source: /home/runner/work/TheWave-WP/TheWave-WP
-          target: var/www/html/wp-content/themes/
+          source: /home/runner/work/TheWave-WP/TheWave-WP/ocean-wp.zip
+          target: /var/www/html/wp-content/themes/
 
 
       - name: give perm on ec2
@@ -45,6 +45,7 @@ jobs:
           port: 22
           script: |
               sudo chmod 777 -R /var/www/
+              unzip /var/www/html/wp-content/themes/ocean-wp.zip
                
   clean:
     runs-on: ubuntu-latest
