@@ -24,6 +24,8 @@ jobs:
         with:
           name: wp-theme
       
+      - run: ls -R ~/distfiles    
+      
       
       - name: copy file to server
         uses: appleboy/scp-action@v0.1.7
