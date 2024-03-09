@@ -17,7 +17,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: wp-theme
-          path: /TheWave-WP/ocean-wp.zip
+          path: ./ocean-wp.zip
            
       - name: Download Theme Artifact
         uses: actions/download-artifact@v2
