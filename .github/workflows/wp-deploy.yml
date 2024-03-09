@@ -45,7 +45,9 @@ jobs:
           port: 22
           script: |
               mv /var/www/html/wp-content/themes/github/workspace/temanuovo.zip  /var/www/html/wp-content/themes/
-              unzip /var/www/html/wp-content/themes/temanuovo.zip
+              cd /var/www/html/wp-content/themes/
+              ls
+              unzip /var/www/html/wp-content/themes/temanuovo.zip -d /var/www/html/wp-content/themes/
                
   clean:
     runs-on: ubuntu-latest
