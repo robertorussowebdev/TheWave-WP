@@ -45,9 +45,7 @@ jobs:
           port: 22
           script: |
               sudo chmod 777 -R /var/www/
-              unzip ocean-wp.zip
-              mv oceanwp /var/www/html/wp-content/themes/
-
+               
   clean:
     runs-on: ubuntu-latest
     needs: deploy
