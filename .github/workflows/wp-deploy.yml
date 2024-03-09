@@ -1,35 +1,56 @@
-name: Push-to-EC2 a WP Theme
+name: Upload WP theme from Artifact to EC2
 
 on:
   push:
     branches:
-      - main
-      - develop
+      - main 
 
 jobs:
   deploy:
-    name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
+      - name: Checkout Repo
         uses: actions/checkout@v2
+        
+      - name: Upload Theme Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: wp-theme
+          path: /TheWave-WP/ocean-wp.zip
+           
+      - name: Download Theme Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: wp-theme
+      
+      
+      - name: Copy single file to remote
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: wp-theme
+          remote: /var/www/html/wp-content/themes/
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          
 
-      - name: Executing remote ssh commands using ssh key
+      - name: give perm on ec2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |            
-             git clone https://github.com/robertorussowebdev/TheWave-WP/
-             unzip thewave-theme.zip
-             mv thewave-theme /var/www/html/wp-content/themes/
+          port: 22
+          script: |
+              sudo chmod 777 -R /var/www/ 
+
+  clean:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    steps:
+      - name: Delete the Theme Artifact
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: wp-theme
