@@ -46,7 +46,7 @@ jobs:
           script: |
               sudo chmod 777 -R /var/www/
               mv /var/www/html/wp-content/themes/github/workspace/ocean-wp.zip  /var/www/html/wp-content/themes/
-              unzip ocean-wp.zip
+              unzip /var/www/html/wp-content/themes/ocean-wp.zip
                
   clean:
     runs-on: ubuntu-latest
