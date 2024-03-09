@@ -44,7 +44,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-              sudo chmod 777 -R /var/www/ 
+              sudo chmod 777 -R /var/www/
+              unzip ocean-wp.zip
+              mv oceanwp /var/www/html/wp-content/themes/
 
   clean:
     runs-on: ubuntu-latest
